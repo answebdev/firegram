@@ -1,4 +1,7 @@
-import * as firebase from 'firebase/app';
+// Import as 'firebase' instead of *
+// Change - see here: https://stackoverflow.com/questions/64545862/upgrade-to-firebase-js-8-0-0-attempted-import-error-app-is-not-exported-from
+// import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/storage';
 import 'firebase/firestore';
 

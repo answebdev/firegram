@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ProgressBar from './ProgressBar';
 
 const UploadForm = () => {
   const [file, setFile] = useState(null);
@@ -52,6 +53,14 @@ const UploadForm = () => {
 
         {/* Display name of selected file: */}
         {file && <div>{file.name}</div>}
+
+        {/* Only show the progress bar when a file is selected.
+         We also need to pass 'file' into the progress bar because
+         we're going to use the 'useStorage' custom hook inside the ProgressBar component,
+         and we need to pass the file into that.
+         We also pass the 'setFile' function, so that when the progress is complete,
+         we can set the file back to 'null', and then, the progress bar doesn't show again. */}
+        {file && <ProgressBar file={file} setFile={setFile} />}
       </div>
     </form>
   );
