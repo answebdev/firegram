@@ -10,17 +10,21 @@ import useFirestore from '../hooks/useFirestore';
 // So, anytime we want to get Firestore data from a collection,
 // we can just use this 'useFirestore' hook.
 
-const ImageGrid = () => {
+const ImageGrid = ({ setSelectedImg }) => {
   // We need to pass in the collection we want to listen to: 'images' (the name we gave our collection in Firebase).
   const { docs } = useFirestore('images');
-  console.log(docs);
+  // console.log(docs);
 
   return (
     <div className='img-grid'>
       {/* Make sure images exist before outputting them */}
       {docs &&
         docs.map((doc) => (
-          <div className='img-wrap' key={doc.id}>
+          <div
+            className='img-wrap'
+            key={doc.id}
+            onClick={() => setSelectedImg(doc.url)}
+          >
             <img src={doc.url} alt='uploaded pic' />
           </div>
         ))}
