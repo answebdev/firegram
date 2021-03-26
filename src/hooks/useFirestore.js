@@ -35,7 +35,7 @@ const useFirestore = (collection) => {
           // Then push the document for each document into the array.
           // Use the spread to get all of the properties (url and createdAt), and then the ID -
           // this ID is what we will use for the 'key' when we output each image.
-          document.push({ ...doc.data(), id: doc.id });
+          documents.push({ ...doc.data(), id: doc.id });
         });
         // Update the documents.
         setDocs(documents);
@@ -49,3 +49,5 @@ const useFirestore = (collection) => {
 
   return { docs };
 };
+
+export default useFirestore;
