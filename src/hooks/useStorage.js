@@ -9,7 +9,11 @@
 
 // Note we need to import the project storage ('projectStorage') from the 'config.js' file.
 import { useState, useEffect } from 'react';
-import { projectStorage } from '../firebase/config';
+import {
+  projectStorage,
+  projectFirestore,
+  timestamp,
+} from '../firebase/config';
 
 // Our custom hook - responsible for handling file uploads
 // and returning some useful value about that upload, such as the upload progress, any errors from the upload, and the image URL after it's been loaded (see state).
@@ -34,6 +38,10 @@ const useStorage = (file) => {
   // every time the dependency in the array below ('file') changes.
   // So every time we have a new 'file' value, it's going to run the code inside this 'useEffect' function to upload that file.
   useEffect(() => {
+    // Make a reference to a collection that we want to save the image document to -
+    // we'll call this collection 'images'
+    const collectionRef = projectFirestore.collection('images');
+
     // This is where all of the logic to upload the file will go.
 
     // Get a reference to where the file should be saved.
@@ -65,6 +73,14 @@ const useStorage = (file) => {
       async () => {
         // Get URL of uploaded image.
         const url = await storageRef.getDownloadURL();
+
+        // Save image URL to the Firestore (we need to, then, import 'projectFirestore' up above from 'config.js'),
+        // so that we can save the URL of the uploaded images in Firebase,
+        // so we can use this to render the images in the browser.
+
+        const createdAt = timestamp();
+        // The 'createdAt' Firebase time stamp is created in the 'config.js' file - see file.
+        collectionRef.add({ url, createdAt });
         setUrl(url);
       }
     );

@@ -21,5 +21,9 @@ firebase.initializeApp(firebaseConfig);
 const projectStorage = firebase.storage();
 const projectFirestore = firebase.firestore();
 
+// Firebase created timestamp for images.
+// Export this down below so we can use it elsewhere (e.g., in 'UseStorage.js').
+const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+
 // Export Storage Service and Firestore Database so we can use them in other files
-export { projectStorage, projectFirestore };
+export { projectStorage, projectFirestore, timestamp };
