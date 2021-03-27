@@ -1,5 +1,6 @@
 import React from 'react';
 import useFirestore from '../hooks/useFirestore';
+import { motion } from 'framer-motion';
 
 // We want to access the data from our Firestore database,
 // so we can cycle through those image URLs and output images for each one of them.
@@ -20,13 +21,21 @@ const ImageGrid = ({ setSelectedImg }) => {
       {/* Make sure images exist before outputting them */}
       {docs &&
         docs.map((doc) => (
-          <div
+          <motion.div
             className='img-wrap'
             key={doc.id}
+            layout
+            whileHover={{ opacity: 1 }}
             onClick={() => setSelectedImg(doc.url)}
           >
-            <img src={doc.url} alt='uploaded pic' />
-          </div>
+            <motion.img
+              src={doc.url}
+              alt='uploaded pic'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            />
+          </motion.div>
         ))}
     </div>
   );

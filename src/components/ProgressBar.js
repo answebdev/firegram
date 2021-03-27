@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import useStorage from '../hooks/useStorage';
+import { motion } from 'framer-motion';
 
 // Use the 'useStorage' hook to upload the file.
 // First, we need to get the props that were passed into the progress bar in 'UploadForm.js' (file, setFile) -
@@ -29,7 +30,13 @@ const ProgressBar = ({ file, setFile }) => {
 
   // Style progress bar depending on percentage of upload done -
   // the 'width' property is going to be driven by to progress of the upload: 'width: progress'
-  return <div className='progress-bar' style={{ width: progress + '%' }}></div>;
+  return (
+    <motion.div
+      className='progress-bar'
+      initial={{ width: 0 }}
+      animate={{ width: progress + '%' }}
+    ></motion.div>
+  );
 };
 
 export default ProgressBar;
